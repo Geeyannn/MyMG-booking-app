@@ -5,10 +5,11 @@ import { StaffSelector } from './shared/staff-selector/staff-selector';
 import { ServiceSelector } from './shared/service-selector/service-selector';
 import { SlotList } from './shared/slot-list/slot-list';
 import { DatePicker } from './shared/date-picker/date-picker';
+import {BookingsList} from './shared/bookings-list/bookings-list';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, SalonSelector, StaffSelector, ServiceSelector, SlotList, DatePicker],
+  imports: [RouterOutlet, SalonSelector, StaffSelector, ServiceSelector, SlotList, DatePicker, BookingsList],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

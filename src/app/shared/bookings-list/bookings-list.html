@@ -1,0 +1,41 @@
+@if (!selectionState.staff()) {
+  <p>Select a staff member to see their bookings.</p>
+} @else if (loading()) {
+  <p>Loading bookings…</p>
+} @else if (error()) {
+  <p>Error: {{ error() }}</p>
+} @else if (bookings().length === 0) {
+  <p>No bookings for this date.</p>
+} @else {
+  <table border="1" cellpadding="4">
+    <thead>
+      <tr>
+        <th>Time</th>
+        <th>Customer</th>
+        <th>Service</th>
+        <th>Status</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (booking of bookings(); track booking.id) {
+        <tr>
+          <td>{{ formatTime(booking.starts_at) }}</td>
+          <td>{{ booking.customer_name }}</td>
+          <td>{{ booking.service_name }}</td>
+          <td>{{ booking.status }}</td>
+          <td>
+            @if (booking.status === 'confirmed') {
+              <button
+                [disabled]="cancelling() === booking.id"
+                (click)="cancelBooking(booking.id)"
+              >
+                Cancel
+              </button>
+            }
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+}

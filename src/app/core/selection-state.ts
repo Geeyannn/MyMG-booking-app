@@ -9,6 +9,7 @@ export class SelectionState {
   readonly staff = signal<Staff | null>(null);
   readonly service = signal<Service | null>(null);
   readonly date = signal<string>(new Date().toISOString().slice(0, 10)); // 'YYYY-MM-DD'
+  readonly refreshTrigger = signal(0);
 
   setSalon(salon: Salon | null) {
     this.salon.set(salon);
@@ -27,5 +28,9 @@ export class SelectionState {
 
   setDate(date: string) {
     this.date.set(date);
+  }
+
+  triggerRefresh() {
+  this.refreshTrigger.update(v => v + 1);
   }
 }
