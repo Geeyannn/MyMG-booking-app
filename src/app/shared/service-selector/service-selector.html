@@ -1,0 +1,21 @@
+@if (!selectionState.staff()) {
+  <p>Select a staff member first.</p>
+} @else if (loading()) {
+  <p>Loading services…</p>
+} @else if (error()) {
+  <p>Error loading services: {{ error() }}</p>
+} @else if (services().length === 0) {
+  <p>This staff member isn't qualified for any services.</p>
+} @else {
+  <label>
+    Service:
+    <select (change)="onSelect($event)">
+      <option value="" disabled selected>Select a service</option>
+      @for (service of services(); track service.id) {
+        <option [value]="service.id">
+          {{ service.name }} ({{ service.duration_minutes }} min)
+        </option>
+      }
+    </select>
+  </label>
+}
