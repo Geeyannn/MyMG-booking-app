@@ -1,21 +1,15 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { SupabaseService } from './core/supabase';
+import { SalonSelector } from './shared/salon-selector/salon-selector';
+
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, SalonSelector],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
+
 export class App {
   protected readonly title = signal('my-mg-booking-app');
-  private supabase = inject(SupabaseService);
-
-  constructor() {
-    this.supabase.client
-      .from('salons')
-      .select('*')
-      .then(res => console.log('salons:', res));
-  }
 }
