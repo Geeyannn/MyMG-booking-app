@@ -1,0 +1,20 @@
+@if (!selectionState.staff() || !selectionState.service()) {
+  <p>Select a staff member and service to see available times.</p>
+} @else if (loading()) {
+  <p>Loading available times…</p>
+} @else if (error()) {
+  <p>Error: {{ error() }}</p>
+} @else if (slots().length === 0) {
+  <p>No available times for this date.</p>
+} @else {
+  <div>
+    @for (slot of slots(); track slot) {
+      <button
+        [disabled]="booking()"
+        (click)="bookSlot(slot)"
+      >
+        {{ formatSlot(slot) }}
+      </button>
+    }
+  </div>
+}
