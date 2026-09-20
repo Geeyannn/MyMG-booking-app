@@ -1,0 +1,19 @@
+@if (!selectionState.salon()) {
+  <p>Select a salon first.</p>
+} @else if (loading()) {
+  <p>Loading staff…</p>
+} @else if (error()) {
+  <p>Error loading staff: {{ error() }}</p>
+} @else {
+  <label>
+    Staff:
+    <select (change)="onSelect($event)">
+      <option value="" disabled selected>Select a staff member</option>
+      @for (member of staff(); track member.id) {
+        <option [value]="member.id">
+          {{ member.full_name }}{{ !member.is_active ? ' (inactive)' : '' }}
+        </option>
+      }
+    </select>
+  </label>
+}
