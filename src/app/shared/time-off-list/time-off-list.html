@@ -1,0 +1,60 @@
+@if (!selectionState.staff()) {
+  <p>Select a staff member to manage their time off.</p>
+} @else {
+  @if (loading()) {
+    <p>Loading time off…</p>
+  } @else if (error()) {
+    <p>Error: {{ error() }}</p>
+  }
+
+  <table border="1" cellpadding="4">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Start</th>
+        <th>End</th>
+        <th>Reason</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (row of timeOffs(); track row.id) {
+        <tr>
+          <td>{{ formatDate(row.starts_at) }}</td>
+          <td>{{ formatTime(row.starts_at) }}</td>
+          <td>{{ formatTime(row.ends_at) }}</td>
+          <td>{{ row.reason }}</td>
+          <td>
+            <button (click)="openEditForm(row)">Edit</button>
+            <button [disabled]="saving()" (click)="deleteTimeOff(row.id)">Delete</button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+
+  @if (!showForm()) {
+    <button (click)="openAddForm()">Add time off</button>
+  } @else {
+    <div>
+      <label>
+        Date:
+        <input type="date" [value]="formDate()" (change)="formDate.set($any($event.target).value)" />
+      </label>
+      <label>
+        Start:
+        <input type="time" [value]="formStart()" (change)="formStart.set($any($event.target).value)" />
+      </label>
+      <label>
+        End:
+        <input type="time" [value]="formEnd()" (change)="formEnd.set($any($event.target).value)" />
+      </label>
+      <label>
+        Reason:
+        <input type="text" [value]="formReason()" (change)="formReason.set($any($event.target).value)" />
+      </label>
+      <button [disabled]="saving()" (click)="saveForm()">Save</button>
+      <button [disabled]="saving()" (click)="cancelForm()">Cancel</button>
+    </div>
+  }
+}
